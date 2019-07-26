@@ -112,7 +112,7 @@ setup(
         'graphviz',
         'pandas>=0.24.1',
         'scipy',
-        'pyarrow',
+        'pyarrow==0.13.0',
         'scikit-learn',
         'pydotplus',
         'pulp',
