@@ -109,10 +109,9 @@ setup(
     install_requires=[
         'pyvis',
         'networkx>=2.2',
-        'matplotlib==2.2.2',
+        'matplotlib',
         'numpy',
         'ciso8601',
-        'cvxopt',
         'lxml',
         'graphviz',
         'pandas>=0.24.1',
@@ -122,10 +121,10 @@ setup(
         'pydotplus',
         'pulp',
         'pytz>=2018.9',
-        'intervaltree',
         'bpmn_python==0.0.18',
         'joblib',
-        'lime'
+        'lime',
+        'ortools'
     ],
     project_urls={
         'Documentation': 'http://pm4py.pads.rwth-aachen.de/documentation/',
