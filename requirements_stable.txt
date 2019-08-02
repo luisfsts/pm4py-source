@@ -3,7 +3,6 @@ networkx==2.2
 matplotlib==2.2.2
 numpy==1.16.0
 ciso8601==2.1.1
-cvxopt==1.2.2
 lxml==4.3.0
 graphviz==0.10.1
 pyarrow==0.13.0
@@ -17,5 +16,5 @@ pytz==2018.9
 keras==2.2.4
 tensorflow==1.13.1
 joblib==0.13.2
-intervaltree
 lime
+ortools
