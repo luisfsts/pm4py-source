@@ -1,5 +1,6 @@
 from pm4py.util.lp.versions import pulp_solver
 from pm4py.util.lp.versions import ortools_solver
+from pm4py.util.lp.versions import pyomo_solver
 
 # not available in the latest version of PM4Py
 CVXOPT = "cvxopt"
@@ -7,10 +8,13 @@ PULP = "pulp"
 # not available in the latest version of PM4Py
 CVXOPT_SOLVER_CUSTOM_ALIGN = "cvxopt_solver_custom_align"
 ORTOOLS_SOLVER = "ortools_solver"
+PYOMO_SOLVER = "pyomo_solver"
 
-VERSIONS_APPLY = {PULP: pulp_solver.apply, ORTOOLS_SOLVER: ortools_solver.apply}
-VERSIONS_GET_PRIM_OBJ = {PULP: pulp_solver.get_prim_obj_from_sol, ORTOOLS_SOLVER: ortools_solver.get_prim_obj_from_sol}
-VERSIONS_GET_POINTS_FROM_SOL = {PULP: pulp_solver.get_points_from_sol, ORTOOLS_SOLVER: ortools_solver.get_points_from_sol}
+VERSIONS_APPLY = {PULP: pulp_solver.apply, ORTOOLS_SOLVER: ortools_solver.apply, PYOMO_SOLVER: pyomo_solver.apply}
+VERSIONS_GET_PRIM_OBJ = {PULP: pulp_solver.get_prim_obj_from_sol, ORTOOLS_SOLVER: ortools_solver.get_prim_obj_from_sol,
+                         PYOMO_SOLVER: pyomo_solver.get_prim_obj_from_sol}
+VERSIONS_GET_POINTS_FROM_SOL = {PULP: pulp_solver.get_points_from_sol,
+                                ORTOOLS_SOLVER: ortools_solver.get_points_from_sol, PYOMO_SOLVER: pyomo_solver.get_points_from_sol}
 
 
 def apply(c, Aub, bub, Aeq, beq, parameters=None, variant=ORTOOLS_SOLVER):
