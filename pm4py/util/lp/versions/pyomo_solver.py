@@ -51,9 +51,9 @@ def apply(c, Aub, bub, Aeq, beq, parameters=None):
     # STEP 1: creates the variable of the model
     x_list = []
     for i in range(Aub.shape[1]):
-        stru = "model.x%d = Var(within=PositiveReals)" % (i)
+        stru = "model.x%d = Var(within=PositiveReals)" % i
         exec(stru)
-        stru = "model.x%d" % (i)
+        stru = "model.x%d" % i
         x_list.append(eval(stru))
 
     # STEP 2: creates the objective function
@@ -66,7 +66,7 @@ def apply(c, Aub, bub, Aeq, beq, parameters=None):
                 obj_fun.append('+')
             obj_fun.append(str(c[j]))
             obj_fun.append("*")
-            obj_fun.append("model.x%d" % (j))
+            obj_fun.append("model.x%d" % j)
     obj_fun.append(", sense=minimize)")
     exec("".join(obj_fun))
 
@@ -87,7 +87,7 @@ def apply(c, Aub, bub, Aeq, beq, parameters=None):
             else:
                 left = bub[i]
 
-            constraint = ["model.constraintdiseq%d = Constraint(expr = (" % (i)]
+            constraint = ["model.constraintdiseq%d = Constraint(expr = (" % i]
             constraint.append(str(left))
             constraint.append(" >= ")
             for j in range(Aub.shape[1]):
@@ -96,7 +96,7 @@ def apply(c, Aub, bub, Aeq, beq, parameters=None):
                         constraint.append('+')
                     constraint.append(str(Aub[i, j]))
                     constraint.append("*")
-                    constraint.append("model.x%d" % (j))
+                    constraint.append("model.x%d" % j)
             constraint.append("))")
             exec("".join(constraint))
 
@@ -112,13 +112,13 @@ def apply(c, Aub, bub, Aeq, beq, parameters=None):
                 if type(beq[i]) is float:
                     left = beq[i]
                 elif type(beq[i]) is np.matrix:
-                    left = beq[i].reshape(-1,).tolist()[0][0]
+                    left = beq[i].reshape(-1, ).tolist()[0][0]
                 elif type(beq[i]) is np.ndarray:
                     left = beq[i].tolist()[0]
                 else:
                     left = beq[i]
 
-                constraint = ["model.constrainteq%d = Constraint(expr = (" % (i)]
+                constraint = ["model.constrainteq%d = Constraint(expr = (" % i]
                 constraint.append(str(left))
                 constraint.append(" == ")
                 for j in range(Aeq.shape[1]):
@@ -127,7 +127,7 @@ def apply(c, Aub, bub, Aeq, beq, parameters=None):
                             constraint.append('+')
                         constraint.append(str(Aeq[i, j]))
                         constraint.append("*")
-                        constraint.append("model.x%d" % (j))
+                        constraint.append("model.x%d" % j)
                 constraint.append("))")
                 exec("".join(constraint))
 
@@ -141,6 +141,7 @@ def apply(c, Aub, bub, Aeq, beq, parameters=None):
     objective = model.obj()
 
     return {"points": points, "objective": objective}
+
 
 def get_prim_obj_from_sol(sol, parameters=None):
     """
