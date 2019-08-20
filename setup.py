@@ -110,7 +110,8 @@ setup(
         'pydotplus',
         'pulp',
         'pytz>=2018.9',
-        'ortools'
+        'ortools',
+        'pyomo'
     ],
     project_urls={
         'Documentation': 'http://pm4py.pads.rwth-aachen.de/documentation/',
