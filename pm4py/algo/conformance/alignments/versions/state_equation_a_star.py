@@ -34,7 +34,7 @@ from pm4py.util import exec_utils
 from enum import Enum
 import sys
 from pm4py.util.constants import PARAMETER_CONSTANT_ACTIVITY_KEY
-
+from pm4py.visualization.petrinet import factory as pn_vis_factory
 
 class Parameters(Enum):
     PARAM_TRACE_COST_FUNCTION = 'trace_cost_function'
@@ -381,6 +381,8 @@ def apply_sync_prod(sync_prod, initial_marking, final_marking, cost_function, sk
 def __search(sync_net, ini, fin, cost_function, skip, ret_tuple_as_trans_desc=False,
              max_align_time_trace=sys.maxsize):
     start_time = time.time()
+
+    # pn_vis_factory.view(pn_vis_factory.apply(sync_net, parameters={"format": "svg"}))
 
     decorate_transitions_prepostset(sync_net)
     decorate_places_preset_trans(sync_net)

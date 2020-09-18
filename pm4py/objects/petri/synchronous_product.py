@@ -1,4 +1,5 @@
 from pm4py.objects import petri
+from pm4py.visualization.petrinet import factory as pn_vis_factory
 
 
 def construct(pn1, im1, fm1, pn2, im2, fm2, skip):
@@ -21,10 +22,11 @@ def construct(pn1, im1, fm1, pn2, im2, fm2, skip):
     sync_net = petri.petrinet.PetriNet('synchronous_product_net of %s and %s' % (pn1.name, pn2.name))
     t1_map, p1_map = __copy_into(pn1, sync_net, True, skip)
     t2_map, p2_map = __copy_into(pn2, sync_net, False, skip)
+   
 
     for t1 in pn1.transitions:
         for t2 in pn2.transitions:
-            if t1.label == t2.label:
+            if t1.label is not None and t2.label is not None and t1.label == t2.label:
                 sync = petri.petrinet.PetriNet.Transition((t1.name, t2.name), (t1.label, t2.label))
                 sync_net.transitions.add(sync)
                 for a in t1.in_arcs:
@@ -35,7 +37,7 @@ def construct(pn1, im1, fm1, pn2, im2, fm2, skip):
                     petri.utils.add_arc_from_to(sync, p1_map[a.target], sync_net)
                 for a in t2.out_arcs:
                     petri.utils.add_arc_from_to(sync, p2_map[a.target], sync_net)
-
+                    
     sync_im = petri.petrinet.Marking()
     sync_fm = petri.petrinet.Marking()
     for p in im1:
@@ -83,7 +85,7 @@ def construct_cost_aware(pn1, im1, fm1, pn2, im2, fm2, skip, pn1_costs, pn2_cost
 
     for t1 in pn1.transitions:
         for t2 in pn2.transitions:
-            if t1.label == t2.label:
+             if t1.label is not None and t2.label is not None and t1.label == t2.label:
                 sync = petri.petrinet.PetriNet.Transition((t1.name, t2.name), (t1.label, t2.label))
                 sync_net.transitions.add(sync)
                 costs[sync] = sync_costs[(t1, t2)]

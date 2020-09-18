@@ -49,9 +49,9 @@ def _get_sink_transition(sub_net):
 
 
 def _add_src_sink_transitions(net, p_s, p_t):
-    src = pn_util.add_transition(net)
+    src = pn_util.add_transition(net, net.name + "_start")
     pn_util.add_arc_from_to(src, p_s, net)
-    sink = pn_util.add_transition(net)
+    sink = pn_util.add_transition(net, net.name + "_end")
     pn_util.add_arc_from_to(p_t, sink, net)
     return net, petrinet.Marking(), petrinet.Marking()
 
@@ -63,9 +63,9 @@ def construct_sequence_pattern(net, sub_nets):
     for i in range(len(sub_nets)):
         pn_util.add_arc_from_to(places[i], _get_src_transition(sub_nets[i]), net)
         pn_util.add_arc_from_to(_get_sink_transition(sub_nets[i]), places[i + 1], net)
-    src = pn_util.add_transition(net)
+    src = pn_util.add_transition(net, net.name + "_start")
     pn_util.add_arc_from_to(src, places[0], net)
-    sink = pn_util.add_transition(net)
+    sink = pn_util.add_transition(net, net.name + "_end")
     pn_util.add_arc_from_to(places[len(places)-1], sink, net)
     return net, petrinet.Marking(), petrinet.Marking()
 
@@ -87,10 +87,10 @@ def construct_and_pattern(net, sub_nets):
         p_t[i] = pn_util.add_place(net)
         pn_util.add_arc_from_to(p_s[i], _get_src_transition(sub_nets[i]), net)
         pn_util.add_arc_from_to(_get_sink_transition(sub_nets[i]), p_t[i], net)
-    src = pn_util.add_transition(net)
+    src = pn_util.add_transition(net, net.name + "_start")
     for p in p_s:
         pn_util.add_arc_from_to(src, p, net)
-    sink = pn_util.add_transition(net)
+    sink = pn_util.add_transition(net, net.name + "_end")
     for p in p_t:
         pn_util.add_arc_from_to(p, sink, net)
     return net, petrinet.Marking(), petrinet.Marking()
